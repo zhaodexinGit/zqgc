@@ -1,0 +1,3 @@
+此。m2.rar文件是maven资源库  
+解压至C:\Users\Administrator\目录
+可以避免下载时间过长

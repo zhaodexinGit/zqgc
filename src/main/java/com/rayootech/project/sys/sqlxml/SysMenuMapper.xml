@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SysMenu">
+
+    <!-- SysMenu列名与属性名映射 -->
+    <resultMap id="SysMenuMap" type="SysMenu">
+		<result column="menu_name" property="menuName"/> 
+		<result column="menu_url" property="menuUrl"/> 
+		<result column="is_disable" property="isDisable"/> 
+		<result column="menu_level" property="menuLevel"/> 
+		<result column="parent_menu_id" property="parentMenuId"/> 
+		<result column="order_num" property="orderNum"/> 
+		<result column="icon_class" property="iconClass"/> 
+    </resultMap>
+
+    <!-- SysMenu表的列名称 -->
+	<sql id="select_SysMenu_columns">
+		id,menu_name,menu_url,is_disable,menu_level,parent_menu_id,order_num,icon_class
+	</sql>
+
+	<!-- 获取SysMenu详细信息 -->
+	<select id="get" parameterType="java.lang.Integer" resultMap="SysMenuMap">
+		select <include refid="select_SysMenu_columns"/> from sys_menu where id=#{id}
+	</select>
+
+	<!-- 查询SysMenu -->
+	<select id="find" parameterType="map" resultMap="SysMenuMap" >
+		select <include refid="select_SysMenu_columns"/> from sys_menu
+		<where>
+			<if test="parentMenuId != null" >
+				  and parent_menu_id = #{parentMenuId}
+			</if>
+		</where>
+		<trim prefix="ORDER BY"> 
+			<if test="order !=null and sort!=null ">
+				${sort} ${order}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 查询SysMenu总数 -->
+	<select id="count" parameterType="map" resultType="int">
+		select count(1) from sys_menu
+		<where>
+			<if test="parentMenuId != null" >
+				  and parent_menu_id = #{parentMenuId}
+			</if>
+		</where>
+	</select>
+
+	<!-- 插入SysMenu： 1.由数据库生成id并赋值到SysMenu对象 -->
+	<insert id="insert" parameterType="SysMenu" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_menu (menu_name,menu_url,is_disable,menu_level,parent_menu_id,order_num,icon_class)
+		values (#{menuName,jdbcType=VARCHAR},#{menuUrl,jdbcType=VARCHAR},#{isDisable,jdbcType=VARCHAR},#{menuLevel,jdbcType=VARCHAR},#{parentMenuId,jdbcType=INTEGER},#{orderNum,jdbcType=INTEGER},#{iconClass,jdbcType=VARCHAR})
+	</insert>
+	
+	<!-- 更新SysMenu -->
+	<update id="update" parameterType="SysMenu">
+		update sys_menu
+		<set >
+		  <if test="menuName != null" >
+			   menu_name = #{menuName,jdbcType=VARCHAR},
+		  </if>
+		  <if test="menuUrl != null" >
+			   menu_url = #{menuUrl,jdbcType=VARCHAR},
+		  </if>
+		  <if test="isDisable != null" >
+			   is_disable = #{isDisable,jdbcType=VARCHAR},
+		  </if>
+		  <if test="menuLevel != null" >
+			   menu_level = #{menuLevel,jdbcType=VARCHAR},
+		  </if>
+		  <if test="parentMenuId != null" >
+			   parent_menu_id = #{parentMenuId,jdbcType=INTEGER},
+		  </if>
+		  <if test="orderNum != null" >
+			   order_num = #{orderNum,jdbcType=INTEGER},
+		  </if>
+		  <if test="iconClass != null" >
+			   icon_class = #{iconClass,jdbcType=VARCHAR},
+		  </if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<!-- 删除SysMenu -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from sys_menu where id=#{id}
+	</delete>
+	
+	<!-- 获取orderNum最大值 -->
+	<select id="getAllMenu" parameterType="map" resultMap="SysMenuMap" >
+		select <include refid="select_SysMenu_columns"/> from sys_menu order by order_num
+	</select>
+	
+	<!-- 获取一级菜单列表 -->
+	<select id="getOneMenu" parameterType="map" resultMap="SysMenuMap" >
+		select <include refid="select_SysMenu_columns"/> from sys_menu where menu_level=1  order by order_num
+	</select>
+	
+	<!-- 获取用户菜单 -->
+	<select id="getUserMenu" parameterType="java.lang.Integer" resultMap="SysMenuMap" >
+		select m.* from sys_menu m,sys_user_menu um where um.user_id=#{userId} and m.id=um.menu_id and m.is_disable=1 order by m.order_num asc
+	</select>
+	
+	<!-- 用户授权时菜单列表 -->
+	<select id="getMenuList" parameterType="java.lang.Integer" resultMap="SysMenuMap" >
+		select m.*,um.user_id as checked  from sys_menu m left join sys_user_menu um on m.id=um.menu_id and um.user_id=#{userId} where m.is_disable=1 order by m.order_num asc
+	</select>	
+	
+	<!-- 获取orderNum最大值 -->
+	<select id="getMaxOrderNum" parameterType="java.lang.Integer" resultType="int">
+	    select IFNULL(max(order_num),0) from sys_menu
+	</select>
+</mapper> 

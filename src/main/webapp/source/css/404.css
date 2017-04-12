@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	margin: auto;
+	background-color: #f4f4f4;
+	widows: 100%;
+	padding-top: 50px;
+	font-size: 12px;
+	color: #666666;
+	font: 12px/1.25 Tahoma,Arial,Helvetica,"Microsoft Yahei",sans-serif;
+}
+.bg{
+	margin: auto;
+	height: 520px;
+	width: 995px;
+	background-image: url("../images/404.jpg");
+}
+.font{
+	margin-top:350px;
+	float:right;
+	height: 100px;
+	width: 380px;
+}
+
+a{
+	color: #0A8CD2;
+    text-decoration: none;
+}
+a:HOVER{
+	color: #0A8CD2;
+    text-decoration: underline;
+}

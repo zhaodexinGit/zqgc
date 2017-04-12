@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="NlbCompanyProfile" >
+  <resultMap id="BaseResultMap" type="com.rayootech.project.sys.entity.NlbCompanyProfile" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="create_user_id" property="create_user_id" jdbcType="INTEGER" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="update_user_id" property="update_user_id" jdbcType="INTEGER" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
+    
+    <!--  createUser：执行com.rayootech.project.sys.entity.User.get方法,并将返回值设置到peoperty.来完成一对一映射  -->
+    <association property="createUser" column="create_user_id" javaType="com.rayootech.project.sys.entity.User" select="User.get"/>
+    
+    <!--  updateUser：执行com.rayootech.project.sys.entity.User.get方法,并将返回值设置到peoperty.来完成一对一映射  -->
+    <association property="updateUser" column="update_user_id"  javaType="com.rayootech.project.sys.entity.User" select="User.get"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.rayootech.project.sys.entity.NlbCompanyProfile" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <!-- 基本的查询字段 -->
+  <sql id="Base_Column_List" >
+    id, title, type, create_user_id, create_time, update_user_id, update_time, remark1, 
+    remark2, remark3
+  </sql>
+  
+  <!-- longtext字段 -->
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <!-- 重要  根据条件查询表记录 -->
+	<select id="find" parameterType="map" resultMap="BaseResultMap" >
+		select <include refid="Base_Column_List"/> from nlb_company_profile
+		<where>
+		    <if test="title !=null ">
+				and title like '%${title}%'
+			</if>
+		    <if test="type !=null ">
+				and type like '%${type}%'
+			</if>
+			<if test="create_user_id !=null ">
+				and create_user_id like '%${create_user_id}%'
+			</if>
+			<if test="create_time !=null ">
+				and create_time like '%${create_time}%'
+			</if>
+			<if test="update_user_id !=null ">
+				and update_user_id like '%${update_user_id}%'
+			</if>
+			<if test="update_time !=null ">
+				and update_time like '%${update_time}%'
+			</if>
+		</where>
+		<trim prefix="ORDER BY"> 
+			<if test="order !=null and sort!=null ">
+				${sort} ${order}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 重要  查询NlbCompanyProfile总数(包含条件筛选) -->
+	<select id="count" parameterType="map" resultType="int">
+		select count(1) from nlb_company_profile
+		<where>
+		   <if test="title !=null ">
+				and title like '%${title}%'
+			</if>
+		    <if test="type !=null ">
+				and type like '%${type}%'
+			</if>
+			<if test="create_user_id !=null ">
+				and create_user_id like '%${create_user_id}%'
+			</if>
+			<if test="create_time !=null ">
+				and create_time like '%${create_time}%'
+			</if>
+			<if test="update_user_id !=null ">
+				and update_user_id like '%${update_user_id}%'
+			</if>
+			<if test="update_time !=null ">
+				and update_time like '%${update_time}%'
+			</if>
+		</where>
+	</select>
+	<!-- 重要 删除指定id的记录 -->
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from nlb_company_profile
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+   <!-- 重要 添加一条新记录 -->
+  <insert id="insert" parameterType="com.rayootech.project.sys.entity.NlbCompanyProfile" >
+    insert into nlb_company_profile (id, title, type, 
+      create_user_id, create_time, update_user_id, 
+      update_time, remark1, remark2, 
+      remark3, content)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{create_user_id,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP}, #{update_user_id,jdbcType=INTEGER}, 
+      #{update_time,jdbcType=TIMESTAMP}, #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <!-- 重要 修改一条记录，通过Id指向 -->
+  <update id="update" parameterType="com.rayootech.project.sys.entity.NlbCompanyProfile" >
+    update nlb_company_profile
+    set title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+       <!-- 创建人创建时间不可修改
+      create_user_id = #{create_user_id,jdbcType=INTEGER},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+        -->
+      content = #{content,jdbcType=LONGVARCHAR},
+      update_user_id = #{update_user_id,jdbcType=INTEGER},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      remark3 = #{remark3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 通过ID获取一条记录 -->
+  <select id="findById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from nlb_company_profile
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 自动生成，暂时保留 -->
+  <insert id="insertSelective" parameterType="com.rayootech.project.sys.entity.NlbCompanyProfile" >
+    insert into nlb_company_profile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="create_user_id != null" >
+        create_user_id,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_user_id != null" >
+        update_user_id,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="create_user_id != null" >
+        #{create_user_id,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_user_id != null" >
+        #{update_user_id,jdbcType=INTEGER},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+   <!-- 自动生成，暂时保留 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.rayootech.project.sys.entity.NlbCompanyProfile" >
+    update nlb_company_profile
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="create_user_id != null" >
+        create_user_id = #{create_user_id,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_user_id != null" >
+        update_user_id = #{update_user_id,jdbcType=INTEGER},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        remark3 = #{remark3,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+   <!-- 自动生成，暂时保留 -->
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rayootech.project.sys.entity.NlbCompanyProfile" >
+    update nlb_company_profile
+    set title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+     
+      create_user_id = #{create_user_id,jdbcType=INTEGER},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+     
+      update_user_id = #{update_user_id,jdbcType=INTEGER},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      remark3 = #{remark3,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

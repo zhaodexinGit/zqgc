@@ -1,0 +1,345 @@
+﻿
+body{font-size:12px; font-family:Verdana,宋体,Tahoma;padding:0px; margin:0px; }
+ul{    margin:0px;padding:0px;}li{    list-style-type:none;}
+a{ color:Black; text-decoration:none;}
+a:hover{ color:Red; text-decoration:underline;}
+img{ border: 0px;}
+
+.txt01 {border: #A4BED4 1px solid;font:Verdana, Geneva, sans-serif,宋体; background-color: #fff; font-size: 14px; height:20px; line-height:20px; }
+.txt02{border-color:#ddd #ddd #ddd #ddd;border-width:1px;padding:3px 2px 2px 2px;font:trebuchet ms, helvetica, arial, sans-serif;color:#000;}
+.txt03{color: #000100;height: 16px;line-height: 16px;padding:3px 2px;border: 1px solid #9296ac;background: url("../img/userInputBg.jpg") repeat-x left top;}
+.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,宋体;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
+.footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
+
+.txt-click{border:#CC9933 1px solid; background:#FFFFCC;}
+
+.head a{color:White;text-decoration:underline;}
+
+.accordion ul{list-style-type:none;margin:0px; padding:10px;}
+.accordion ul li{ padding:0px;}
+.accordion ul li a{line-height:24px; cursor:pointer;}
+.accordion ul li div{margin:2px 0px;padding-left:10px;padding-top:2px; border:1px solid transparent;}
+.menuItem li div:hover{border:1px dashed #D69C00; background:#FFE88C;cursor:pointer;}
+.accordion ul li div.hover a{color:#D16C00; text-decoration:none;}
+.accordion ul li div.selected{border:1px solid #D69C00; background:#FFE88C;cursor:default;}
+.accordion ul li div.selected a{color:#D16C00; font-weight:bold;}
+
+
+.bigicon .img { display: block;}
+.bigicon li{ text-align: center;}
+ul.bigicon li div{ padding-left: 0px;}
+
+
+.fontbold{ font-weight:bold;}
+.fontnormal{font-weight:normal;}
+
+.btnsubmit{border-color: #ff9000 #cc4f00 #cc4f00 #ff9000;border-style:solid;border-width:1px;text-align: center; padding: 2px 15px; background: #e36b0f;  color: #fff; font-size: 12px; cursor: pointer;}
+.inputsubmit-blue{background:none repeat scroll 0 0 #005EAC;border-color:#D8DFEA #0E1F5B #0E1F5B #D8DFEA;border-style:solid;border-width:1px;color:#FFFFFF;cursor:pointer;font-size:12px;height:24px;line-height:16px;padding:3px 15px;text-align:center;}
+.btncancel{background-color:#005EAC;border-color:#B8D4E8 #124680 #124680 #B8D4E8;border-style:solid;border-width:1px;color:#FFFFFF;cursor:pointer;font-size:12px;padding:2px 15px;text-align:center;    }
+.btn-gray{background:none repeat scroll 0 0 #F0F0F0 !important;border-color:#FFFFFF #848484 #848484 #FFFFFF !important;border-style:solid;border-width:1px;color:#333333 !important;}
+.btn{border:0 none;color:#2B2B2B;cursor:pointer;font-size:13px;font-weight:bold;height:24px;line-height:24px;padding:0;text-align:center;background-image:url(/images/bg_v6.gif);background-repeat:no-repeat;}
+.inputsubmit{background-position:-432px 0;width:82px;}
+.inputsubmit-active{background-position:-432px -72px;}
+.inputsubmit-hover{background-position:-432px -36px;}
+
+.inputcancel {background-position:-324px 0;margin-left:18px;width:78px;}
+.inputcancel-active{background-position:-324px -72px;}
+.inputcancel-hover{background-position:-324px -36px;}
+
+.btn-ok{ background:url(../img/lane_btn_sprites.png) no-repeat 0px -190px; width:56px; height:24px; border:none;cursor:pointer;}
+.btn-cancel{ background:url(../img/lane_btn_sprites.png) no-repeat -62px -155px; width:56px; height:24px; border:none;cursor:pointer;}
+
+/********************** 按钮样式 **********************/
+.button_height20{BORDER: #66a4fa 1px solid;FONT-SIZE: 9pt;BACKGROUND: url(/images/bottom_over.gif);CURSOR: hand;HEIGHT: 22px;}
+.button_height20_over{BORDER: #66a4fa 1px solid;FONT-SIZE: 9pt;BACKGROUND: url(/images/bottom.gif);CURSOR: hand; HEIGHT: 22px;}
+
+
+#treetable td{padding:0px;}
+
+.tr-odd{  background-color:white }
+.tr-even{background-color:#F0F5FC}
+.tr-active{background-color:#FFF799;}
+.tr-select{background-color:#B7C9E9;}
+
+.nav-node-parent{ background:#E0ECFF;}
+
+ /************jQuery.Validate插件样式开始********************/        
+ label.error,em.error{ background: url(/images/cross.png) no-repeat 0px 0px;color: Red; font-style:normal; padding:5px 0px;padding-left: 24px; float:none;} 
+ label.success,em.success{background: url(/images/success.gif) no-repeat 0px 0px;color: Red;padding:5px 0px;padding-left: 24px; float:none;}       
+ input.error { border: solid 2px #FF0000;}
+
+ /************jQuery.Validate插件样式结束********************/
+ 
+img.spinbutton{position:absolute;right:2px;top:2px;}
+
+label.hcheckbox {padding-left: 24px; cursor:pointer;background: url(../img/chk.png) no-repeat left -110px; line-height:22px; height:21px; display:inline-block; } 
+label.checked {background-position:left -160px;  } 
+label.disabled{background-position:left -135px;}
+
+.hRadio 
+{
+    padding-left: 22px; display: inline-block;
+	background: transparent url(../img/radio.png) no-repeat left top;
+	height: 19px; line-height:20px;
+	cursor:pointer;vertical-align:middle;
+}
+
+.hRadio_Checked { background-position: left bottom;}
+
+ul.checkbox{ padding:0px; margin:0px; list-style-image:none; list-style-type:none;}
+ul.checkbox li{ float:left; width:100px; margin-bottom:5px; padding-left:10px;}
+
+.project li
+{
+    height:30px; line-height:30px;
+    padding:2px; padding-bottom:10px;
+}
+.project li span
+{
+    width:180px; text-align:left; float:left; vertical-align:middle;
+}
+
+.chked
+{
+    background:url(../img/checkbox1.png) no-repeat 0 -12px; height:13px;padding-left: 12px; display: inline-block;
+}
+
+.nochked
+{
+    background:url(../img/checkbox1.png) no-repeat;height:12px;padding-left: 12px; display: inline-block;
+}
+
+.filter-first-td{width:14px;}
+
+
+.grid {	font: 12px arial, helvetica, sans-serif;border:1px solid #8DB2E3;}
+.grid td {	font: 100% arial, helvetica, sans-serif; height:24px;padding:5px;}
+.grid  { width: 100%; border-collapse: collapse}
+.grid th { background:#E7F3FE; height:27px; line-height:27px;border:1px solid #8DB2E3; padding-left:5px;}
+.grid td {	border:1px solid #8DB2E3;padding-left:5px;}
+
+
+
+#header{overflow: hidden; height: 71px; 
+        background: #2076C3 url(../img/headbg.png) repeat-x; 
+        line-height: 64px; color: #fff; font-family: Verdana, 微软雅黑,黑体}
+        
+.footer {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: #e0ecff;
+    background-image: none;
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: auto auto;
+    line-height: 28px;
+}
+
+
+
+/*----------------------------------------------------------------------*/
+.lego-common-tips{
+    width: 80%;
+    position: fixed;
+    left: 10%;
+    top: 0;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
+    color: white;
+    border-radius: 4px;
+    z-index: 20000;
+}
+
+.lego-common-errortip{
+    background-color: #fcdddd;
+    color: #333;
+    opacity: 0;
+}
+
+.lego-common-righttip{
+    background-color: #56a845;
+    opacity: 0;
+}
+
+/*提示确认层*/
+#lgm-alter-wrap{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+#lgm-alter-mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 11000;
+}
+.lgm-alter-layout{
+    position: absolute;
+    top: 200px;
+    left: 0;
+    z-index: 11010;
+    width: 200px;
+    padding: 10px;
+    text-align: left;
+    white-space: normal;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 6px;
+    background-clip: padding-box;
+}
+.lgm-alter-t,.lgm-alter-t:after{
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+.lgm-alter-t{
+    top: -11px;
+    left: 10%;
+    border-bottom-color: rgba(0,0,0,0.25);
+    border-width: 11px;
+    border-top-width: 0;
+}
+.lgm-alter-t:after{
+    top: 1px;
+    margin-left: -10px;
+    border-bottom-color: #fff;
+    content: "";
+    border-width: 10px;
+    border-top-width: 0;
+}
+
+.lgm-alter-c{
+    padding-left: 10px;
+    padding-bottom: 10px;
+    color: #71767b;
+}
+.no-btn .lgm-alter-c{
+    padding-bottom: 0;
+}
+
+.lgm-alter-b{
+    text-align: center
+}
+
+
+
+.lgm-icon-selectWrap{
+position: relative;
+cursor: pointer;
+}
+
+.lgm-icon-selectIcon{
+    position: absolute;
+    display: inline-block;
+    width: 18px;
+    height: 18px !important;
+    border-radius: 9px;
+    border: 1px solid #E7E7E7;
+    top: 12px;
+    top: 0;
+    background-color: white;
+}
+
+.lgm-icon-selectMin{
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin: 3px;
+    background-color: white;
+}
+.lgm-icon-selected .lgm-icon-selectMin{
+    background-color: #5D9CEC;
+}
+
+.lgm-icon-content{
+    margin-left: 23px;
+    margin-right: 17px;
+    color: #A4A9AE;
+    font-size: 13px;
+    line-height: 21px;
+}
+
+
+.lgm-block-title{
+    font-size: 12px;
+    color: #71767b;
+    font-weight: bold;
+    padding: 10px 12px;
+    border-bottom: 1px solid #DFDFDF;
+    clear: both;
+}
+.lgm-block-title>span{
+    font-weight: normal;
+    color: #a4a9ae;
+}
+
+/*lego btn */
+
+.lego-common-btn{
+    height: 30px;
+    background-color: #5D9CEC;
+    color: #FFF;
+    border: none;
+    font-weight: bolder;
+    padding: 0 20px;
+    margin: 0 7px;
+    border-radius: 0;
+}
+.lego-common-btn-cancel{
+    background-color: #D0D4D9 !important;
+}
+
+
+
+.logo-img {
+    width: 62px;
+    height: 62px;
+    float: left;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    position: relative;
+    padding: 1px;
+}
+.logo-img img {
+    cursor: pointer;
+    width: 58px;
+    height: 58px;
+    display: block;
+}
+.logo-img div.logo-default {
+    width: 100%;
+    height: 100%; 
+    background-size: cover;
+    line-height: 58px;
+    text-align: center;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+}
+
+.logo-addbtn {
+    position: absolute;
+    background: url(../images/add-img-btn.png) center center no-repeat;
+    background-size: 20px;
+    width: 25px;
+    height: 26px;
+    top: 50%;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -13px;
+}
+
+
+

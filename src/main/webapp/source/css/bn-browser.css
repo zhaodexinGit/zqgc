@@ -1,0 +1,16 @@
+html{min-width:966px;background:#f9f9f9;font-size:12px;background-color:#f6f1e8}
+.banana .browser{width:960px;margin:0 auto;height:671px;}
+.browser .b-top-k,.browser .b-word,.browser .b-down,.browser .b-browser{width:960px;margin:0 auto}
+.browser .b-ku{height:70px;margin-top:40px}
+.browser .b-ku .b-ku-img{width:64px;height:64px;margin:0 auto;background:url(../images/bn-bg.png) -223px -195px}
+.browser .b-word{height:20px;line-height:20px;text-align:center;font-size:16px;color:#e68664;margin-top:30px}
+.browser .b-down{height:25px}
+.browser .b-down .b-down-img{height:25px;width:14px;margin:0 auto;margin-top:30px;background:url(../images/bn-bg.png) -41px -185px}
+.browser .b-browser{height:150px;margin-top:60px}
+.browser .b-browser .browser-div{width:540px;height:150px;margin:0 auto}
+.browser .b-browser .browser-div .br-div{width:180px;float:left;height:150px;display:block}
+.browser .b-browser .browser-div .br-div a{height:90px;width:90px;display:block;margin:0 auto;cursor:pointer}
+.browser .b-browser .browser-div .br-div .br-word{height:26px;width:180px;line-height:26px;color:#baad8f;text-align:center;font-size:16px;margin-top:30px}
+.browser-div .br-div .browser-ie{background:url(../images/bn-bg.png) -98px -177px}
+.browser-div .br-div .browser-chrome{background:url(../images/bn-bg.png) -98px -75px}
+.browser-div .br-div .browser-fireFox{background:url(../images/bn-bg.png) -204px -75px}

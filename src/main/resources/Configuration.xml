@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>    
+ <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties>
+		<property name="dialect" value="MYSQL" />
+	</properties>
+	<typeAliases>
+		<!-- system -->
+		<typeAlias alias="User" type="com.rayootech.project.sys.entity.User" />
+		<typeAlias alias="SysMenu" type="com.rayootech.project.sys.entity.SysMenu" />
+		<typeAlias alias="SysUserMenu" type="com.rayootech.project.sys.entity.SysUserMenu" />
+		<typeAlias alias="SysRole" type="com.rayootech.project.sys.entity.SysRole"/>
+		<typeAlias alias="SysUserRole" type="com.rayootech.project.sys.entity.SysUserRole"/>
+		
+		<typeAlias alias="NlbCompanyProfile" type="com.rayootech.project.sys.entity.NlbCompanyProfile" />
+		<typeAlias alias="NlbCompanyNews" type="com.rayootech.project.sys.entity.NlbCompanyNews" />
+	</typeAliases>
+	<plugins>
+		<plugin interceptor="com.rayootech.project.utils.orm.page.PaginationInterceptor" />
+	</plugins>
+</configuration>

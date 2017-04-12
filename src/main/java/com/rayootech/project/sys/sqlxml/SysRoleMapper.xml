@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SysRole">
+
+    <!-- SysRole列名与属性名映射 -->
+    <resultMap id="SysRoleMap" type="SysRole">
+		<result column="role_code" property="roleCode"/> 
+		<result column="role_name" property="roleName"/> 
+		<result column="status" property="status"/> 
+		<result column="remark" property="remark"/> 
+		<result column="creator" property="creator"/> 
+		<result column="create_time" property="createTime"/> 
+    </resultMap>
+
+    <!-- SysRole表的列名称 -->
+	<sql id="select_SysRole_columns">
+		id,role_code,role_name,status,remark,creator,create_time
+	</sql>
+
+	<!-- 获取SysRole详细信息 -->
+	<select id="get" parameterType="java.lang.Integer" resultMap="SysRoleMap">
+		select <include refid="select_SysRole_columns"/> from sys_role where id=#{id}
+	</select>
+
+	<!-- 查询SysRole -->
+	<select id="find" parameterType="map" resultMap="SysRoleMap" >
+		SELECT 
+		r.id,
+		r.role_name,
+		r.role_code,
+		r.`status`,
+		r.remark,
+		r.creator,
+		r.create_time ,
+		u.user_name as creatorName
+		from sys_role r ,`user` u  
+
+			<where>
+			 r.creator=u.id 
+		    <if test="roleName !=null ">
+				and r.role_name like '%${roleName}%'
+			</if>
+		    <if test="status != null and status != '-1'">
+				and r.status = #{status}
+			</if>
+			</where>
+		<trim prefix="ORDER BY"> 
+			<if test="order !=null and sort!=null ">
+				${sort} ${order}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 查询SysRole总数 -->
+	<select id="count" parameterType="map" resultType="int">
+		select count(1) from sys_role
+		<where>
+		<if test="roleName !=null ">
+				and role_name like '%${roleName}%'
+			</if>
+		    <if test="status != null and status != '-1'">
+				and status = #{status}
+			</if>
+		</where>
+	</select>
+
+	<!-- 插入SysRole： 1.由数据库生成id并赋值到SysRole对象 -->
+	<insert id="insert" parameterType="SysRole" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_role (role_code,role_name,status,remark,creator,create_time)
+		values (#{roleCode,jdbcType=VARCHAR},#{roleName,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{creator,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<!-- 更新SysRole -->
+	<update id="update" parameterType="SysRole">
+		update sys_role
+		<set >
+		  <if test="roleCode != null" >
+			   role_code = #{roleCode,jdbcType=VARCHAR},
+		  </if>
+		  <if test="roleName != null" >
+			   role_name = #{roleName,jdbcType=VARCHAR},
+		  </if>
+		  <if test="status != null" >
+			   status = #{status,jdbcType=VARCHAR},
+		  </if>
+		  <if test="remark != null" >
+			   remark = #{remark,jdbcType=VARCHAR},
+		  </if>
+		  <if test="creator != null and creator !=0" >
+			   creator = #{creator,jdbcType=INTEGER},
+		  </if>
+		  <if test="createTime != null" >
+			   create_time = #{createTime,jdbcType=TIMESTAMP},
+		  </if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<!-- 删除SysRole -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from sys_role where id=#{id}
+	</delete>
+	
+	<!-- 判断角色编码是否存在 -->
+	<select id="checkoutRoleCode" parameterType="map" resultType="int">
+		SELECT count(*) from sys_role
+		<where>
+           role_code=#{roleCode}
+		   <if test="id != null and id != '' ">
+			and id &lt;>#{id}
+		   </if>
+		</where>
+	</select>
+	
+</mapper> 

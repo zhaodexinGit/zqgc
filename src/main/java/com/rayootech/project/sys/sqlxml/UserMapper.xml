@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+
+    <!-- User列名与属性名映射 -->
+    <resultMap id="UserMap" type="User">
+		<result column="user_name" property="userName"/> 
+		<result column="pass_word" property="passWord"/> 
+		<result column="name" property="name"/> 
+		<result column="email" property="email"/> 
+		<result column="mobile" property="mobile"/>
+		<result column="login_ip" property="loginIp"/> 
+		<result column="enable_status" property="enableStatus"/> 
+		<result column="create_user" property="createUser"/> 
+		<result column="create_date" property="createDate"/> 
+		<result column="login_time" property="loginTime"/> 
+		<result column="failed_times" property="failedTimes"/> 
+		<result column="salt" property="salt"/>
+		<result column="roles" property="roles"/>
+    </resultMap>
+
+    <!-- User表的列名称 -->
+	<sql id="select_User_columns">
+		id,user_name,pass_word,name,email,mobile,login_ip,enable_status,create_user,create_date,login_time,failed_times,salt,roles
+	</sql>
+
+	<!-- 获取User详细信息 -->
+	<select id="get" parameterType="java.lang.Integer" resultMap="UserMap">
+		select <include refid="select_User_columns"/> from user where id=#{id}
+	</select>
+
+	<!-- 查询User -->
+	<select id="find" parameterType="map" resultMap="UserMap" >
+		select <include refid="select_User_columns"/> from user
+		<where>
+		    <if test="userName !=null ">
+				and user_name like '%${userName}%'
+			</if>
+		    <if test="enableStatus != null and enableStatus != '-1'">
+				and enable_status = #{enableStatus}
+			</if>
+		    <if test="start_date !=null">
+				and DATE_FORMAT(create_date,'%Y-%m-%d') >= #{start_date}
+			</if>
+			<if test="end_date !=null">
+				and DATE_FORMAT(create_date,'%Y-%m-%d') &lt;= #{end_date}
+			</if>
+			<if test="roleid != null">
+				and id in(select user_id from sys_user_role where role_id=#{roleid})
+			</if>
+		</where>
+		<trim prefix="ORDER BY"> 
+			<if test="order !=null and sort!=null ">
+				${sort} ${order}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 查询User总数 -->
+	<select id="count" parameterType="map" resultType="int">
+		select count(1) from user
+		<where>
+		    <if test="userName !=null">
+				and user_name like '%${userName}%'
+			</if>
+		    <if test="enableStatus !=null and enableStatus != '-1'">
+				and enable_status = #{enableStatus}
+			</if>
+		    <if test="start_date !=null">
+				and DATE_FORMAT(create_date,'%Y-%m-%d') >= #{start_date}
+			</if>
+			<if test="end_date !=null">
+				and DATE_FORMAT(create_date,'%Y-%m-%d') &lt;= #{end_date}
+			</if>
+			<if test="roleid != null">
+				and id in(select user_id from sys_user_role where role_id=#{roleid})
+			</if>
+		</where>
+	</select>
+
+	<!-- 插入User： 1.由数据库生成id并赋值到User对象 -->
+	<insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+		insert into user (user_name,pass_word,name,email,mobile,login_ip,enable_status,create_user,create_date,login_time,failed_times,salt,roles)
+		values (#{userName,jdbcType=VARCHAR},#{passWord,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{mobile,jdbcType=VARCHAR},#{loginIp,jdbcType=VARCHAR},#{enableStatus,jdbcType=INTEGER},#{createUser,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{loginTime,jdbcType=TIMESTAMP},#{failedTimes,jdbcType=INTEGER},#{salt,jdbcType=VARCHAR},#{roles,jdbcType=VARCHAR})
+	</insert>
+	
+	<!-- 更新User -->
+	<update id="update" parameterType="User">
+		update user
+		<set >
+		  <if test="userName != null" >
+			   user_name = #{userName,jdbcType=VARCHAR},
+		  </if>
+		  <if test="passWord != null" >
+			   pass_word = #{passWord,jdbcType=VARCHAR},
+		  </if>
+		  <if test="name != null" >
+			   name = #{name,jdbcType=VARCHAR},
+		  </if>
+		  <if test="email != null" >
+			   email = #{email,jdbcType=VARCHAR},
+		  </if>
+		  <if test="mobile != null" >
+			   mobile = #{mobile,jdbcType=VARCHAR},
+		  </if>
+		  <if test="loginIp != null" >
+			   login_ip = #{loginIp,jdbcType=VARCHAR},
+		  </if>
+		  <if test="enableStatus != null" >
+			   enable_status = #{enableStatus,jdbcType=INTEGER},
+		  </if>
+		  <if test="createUser != null" >
+			   create_user = #{createUser,jdbcType=VARCHAR},
+		  </if>
+		  <if test="createDate != null" >
+			   create_date = #{createDate,jdbcType=TIMESTAMP},
+		  </if>
+		  <if test="loginTime != null" >
+			   login_time = #{loginTime,jdbcType=TIMESTAMP},
+		  </if>
+		  <if test="failedTimes != null" >
+			   failed_times = #{failedTimes,jdbcType=INTEGER},
+		  </if>
+		  <if test="salt != null" >
+			   salt = #{salt,jdbcType=VARCHAR},
+		  </if>
+		  <if test="roles != null" >
+			   roles = #{roles,jdbcType=VARCHAR},
+		  </if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<!-- 删除User -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from user where id=#{id}
+	</delete>
+	
+	<!-- 用户登录 -->
+	<select id="loginIn" parameterType="string" resultMap="UserMap">
+		select id,user_name,pass_word,salt,enable_status from user where user_name=#{userName}
+	</select>
+	
+	<!-- 校验登录名是否存在 -->
+	<select id="uniqueName" parameterType="map" resultType="int">
+        select count(1) from user
+        <where>
+           user_name=#{userName}
+		   <if test="id != null and id != '' ">
+			and id &lt;>#{id}
+		   </if>
+		</where>
+	</select>
+</mapper> 
