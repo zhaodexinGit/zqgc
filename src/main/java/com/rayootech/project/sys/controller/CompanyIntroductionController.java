@@ -1,12 +1,6 @@
 package com.rayootech.project.sys.controller;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +12,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.rayootech.project.sys.entity.NlbCompanyNews;
-import com.rayootech.project.sys.service.NlbCompanyNewsService;
+import com.rayootech.project.sys.entity.CompanyIntroduction;
+import com.rayootech.project.sys.service.CompanyIntroductionService;
 import com.rayootech.project.utils.PageJson;
 import com.rayootech.project.utils.Utils;
 import com.rayootech.project.utils.orm.Page;
@@ -40,7 +33,7 @@ import com.rayootech.project.utils.orm.Page;
 public class CompanyIntroductionController {
 
 	@Autowired
-	private NlbCompanyNewsService nlbCompanyNewsService;
+	private CompanyIntroductionService companyIntroductionService;
 	/**
 	 * 
 	 * <B>功能简述</B><br>
@@ -52,9 +45,9 @@ public class CompanyIntroductionController {
 	 * @return
 	 */
 	@RequestMapping(value = "list")
-	public String dynamicList(HttpServletRequest request, Page<NlbCompanyNews> pageData, ModelMap modelMap) {
+	public String queryList(HttpServletRequest request, Page<CompanyIntroduction> pageData, ModelMap modelMap) {
 		Map<String, Object> params = Utils.reqParamToGenericMap(request);
-		modelMap.put("pageData", nlbCompanyNewsService.dynamicList(pageData, params));
+		modelMap.put("pageData", companyIntroductionService.queryList(pageData, params));
 		return "front_sys/introduction/list";
 	}
 	/**
@@ -66,7 +59,7 @@ public class CompanyIntroductionController {
 	 */
 	@RequestMapping(value = "getList")
 	@ResponseBody
-	public String getDynamicList(HttpServletRequest request, PageJson<NlbCompanyNews> pageData) {
+	public String getList(HttpServletRequest request, PageJson<CompanyIntroduction> pageData) {
 //		Map<String, Object> params = Utils.reqParamToGenericMap(request);
 //		return nlbCompanyProfileService.nlbmmList(pageData, params);
 		return null;
@@ -111,23 +104,23 @@ public class CompanyIntroductionController {
 	 * @return
 	 */
 	@RequestMapping("toDetail")
-	public String toDetail(HttpServletRequest request,Integer id, ModelMap modelMap) {
-		NlbCompanyNews dynamic = nlbCompanyNewsService.getById(id);
-		modelMap.put("dynamic",dynamic);
+	public String toDetail(HttpServletRequest request,String id, ModelMap modelMap) {
+		CompanyIntroduction entity = companyIntroductionService.findById(id);
+		modelMap.put("entity",entity);
 		return "front_sys/introduction/detail";
 	}
 	/**
 	 * 
 	 * <B>功能简述</B><br>
-	 * 跳到诺兰帮动态修改界面
+	 * 跳到修改界面
 	 * 
 	 * @author hkz
 	 * @return
 	 */
 	@RequestMapping("toUpdate")
-	public String toUpdateDynamic(HttpServletRequest request,Integer id, ModelMap modelMap) {
-		NlbCompanyNews dynamic = nlbCompanyNewsService.getById(id);
-		modelMap.put("dynamic",dynamic);
+	public String toUpdateDynamic(HttpServletRequest request,String id, ModelMap modelMap) {
+		CompanyIntroduction entity = companyIntroductionService.findById(id);
+		modelMap.put("entity",entity);
 //		modelMap.put("user", JSON.toJSONString(nlbCompanyProfileService.(userId)));
 		return "front_sys/introduction/update";
 	}
@@ -142,8 +135,8 @@ public class CompanyIntroductionController {
 	 */
 	@RequestMapping(value = "save")
 	@ResponseBody
-	public String saveDynamic(NlbCompanyNews dynamic) {
-		return nlbCompanyNewsService.saveDynamic(dynamic);
+	public String saveDynamic(CompanyIntroduction entity) {
+		return companyIntroductionService.save(entity);
 	}
 	
 	/**
@@ -156,8 +149,8 @@ public class CompanyIntroductionController {
 	 */
 	@RequestMapping(value = "update")
 	@ResponseBody
-	public String updateDynamic(NlbCompanyNews dynamic) {
-		return nlbCompanyNewsService.updateDynamic(dynamic);
+	public String updateDynamic(CompanyIntroduction entity) {
+		return companyIntroductionService.updateAllValue(entity);
 	}
 	
 
@@ -171,7 +164,7 @@ public class CompanyIntroductionController {
 	 */
 	@RequestMapping(value = "delete")
 	@ResponseBody
-	public String deleteDynamic(Integer id) {
-		return nlbCompanyNewsService.deleteDynamic(id);
+	public String deleteDynamic(String id) {
+		return companyIntroductionService.delete(id);
 	}
 }

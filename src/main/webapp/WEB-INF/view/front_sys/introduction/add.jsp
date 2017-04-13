@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>新增动态</title>
+<title>新增公司介绍</title>
 <c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
 <link rel="stylesheet" href="${ctx}/source/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${ctx}/source/plugins/easyui/themes/bootstrap/easyui.css" />
@@ -26,7 +26,7 @@
 <script type="text/javascript" src="${ctx}/source/plugins/ckeditor_4.5.10_full/ckeditor/ckeditor.js"></script>
 </head>
 <body style="background: none repeat scroll 0 0 #EEEEEE;">
-	<form id="addDynamicForm" action="${ctx}/front_sys/dynamic/saveDynamic.htm" method="post">
+	<form id="addDynamicForm" action="${ctx}/front_sys/introduction/save.htm" method="post">
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span12">
@@ -35,7 +35,7 @@
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-plus"></i>
 							</span>
-							<h5>新增动态</h5>
+							<h5>新增公司介绍</h5>
 						</div>
 						<div class="widget-content nopadding">
 							<table cellspacing="0" cellpadding="5" style="width: 96%; margin: 20px" class="bootsTable">
@@ -45,14 +45,11 @@
 										<td style='width:78%'><input type="text"style='width:70%' name="title" id="title" /></td>
 									
 									</tr>
-									<tr>
-										<td width="12%">简介 *</td>
-										<td style='width:78%'><input type="text"style='width:70%' name="introduction" id="introduction" /></td>
-									</tr>
-									<tr>
+									
+									<!-- <tr>
 										<td width="12%">简介图片 *</td>
 										<td style='width:78%'><input type="file" style='width:70%' name="introduction_img" id="introduction_img" /></td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td>内容</td>
 										<td colspan="3"><textarea name="content" id="content" class="ckeditor" value='ss'></textarea></td>
@@ -73,11 +70,11 @@
 		</div>
 	</form>
 <script>
-	function saveDynamic() {
+	function save() {
 		$('#addDynamicForm').ajaxSubmit(function(data) {
 			if (data == "success") {
 				alert("保存成功");
-				window.location.href = '${ctx}/front_sys/dynamic/dynamicList.htm';
+				window.location.href = '${ctx}/front_sys/introduction/list.htm';
 			} else {
 				alert("保存失败!");
 			}
@@ -118,7 +115,7 @@
 			},
 			submitHandler : function(form) {
 				$('#content').val(CKEDITOR.instances.content.getData());
-				saveDynamic();
+				save();
 				return false;
 			}
 		});

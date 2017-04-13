@@ -16,6 +16,8 @@ public class CompanyIntroduction {
     private String operate_time;
 
     private String content;
+    
+    private User operateUser;
 
     public String getId() {
         return id;
@@ -80,4 +82,12 @@ public class CompanyIntroduction {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+	public User getOperateUser() {
+		return operateUser;
+	}
+
+	public void setOperateUser(User operateUser) {
+		this.operateUser = operateUser;
+	}
 }

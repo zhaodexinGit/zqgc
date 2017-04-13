@@ -1,145 +1,224 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="CompanyIntroduction" >
-  <resultMap id="BaseResultMap" type="com.rayootech.project.sys.entity.CompanyIntroduction" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
-    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
-    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
-    <result column="operate_userid" property="operate_userid" jdbcType="VARCHAR" />
-    <result column="operate_time" property="operate_time" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.rayootech.project.sys.entity.CompanyIntroduction" extends="BaseResultMap" >
-    <result column="content" property="content" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, title, remark1, remark2, remark3, operate_userid, operate_time
-  </sql>
-  <sql id="Blob_Column_List" >
-    content
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from company_introduction
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from company_introduction
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.rayootech.project.sys.entity.CompanyIntroduction" >
-    insert into company_introduction (id, title, remark1, 
-      remark2, remark3, operate_userid, 
-      operate_time, content)
-    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
-      #{remark2,jdbcType=VARCHAR}, #{remark3,jdbcType=VARCHAR}, #{operate_userid,jdbcType=VARCHAR}, 
-      #{operate_time,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.rayootech.project.sys.entity.CompanyIntroduction" >
-    insert into company_introduction
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="remark1 != null" >
-        remark1,
-      </if>
-      <if test="remark2 != null" >
-        remark2,
-      </if>
-      <if test="remark3 != null" >
-        remark3,
-      </if>
-      <if test="operate_userid != null" >
-        operate_userid,
-      </if>
-      <if test="operate_time != null" >
-        operate_time,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="remark1 != null" >
-        #{remark1,jdbcType=VARCHAR},
-      </if>
-      <if test="remark2 != null" >
-        #{remark2,jdbcType=VARCHAR},
-      </if>
-      <if test="remark3 != null" >
-        #{remark3,jdbcType=VARCHAR},
-      </if>
-      <if test="operate_userid != null" >
-        #{operate_userid,jdbcType=VARCHAR},
-      </if>
-      <if test="operate_time != null" >
-        #{operate_time,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rayootech.project.sys.entity.CompanyIntroduction" >
-    update company_introduction
-    <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="remark1 != null" >
-        remark1 = #{remark1,jdbcType=VARCHAR},
-      </if>
-      <if test="remark2 != null" >
-        remark2 = #{remark2,jdbcType=VARCHAR},
-      </if>
-      <if test="remark3 != null" >
-        remark3 = #{remark3,jdbcType=VARCHAR},
-      </if>
-      <if test="operate_userid != null" >
-        operate_userid = #{operate_userid,jdbcType=VARCHAR},
-      </if>
-      <if test="operate_time != null" >
-        operate_time = #{operate_time,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rayootech.project.sys.entity.CompanyIntroduction" >
-    update company_introduction
-    set title = #{title,jdbcType=VARCHAR},
-      remark1 = #{remark1,jdbcType=VARCHAR},
-      remark2 = #{remark2,jdbcType=VARCHAR},
-      remark3 = #{remark3,jdbcType=VARCHAR},
-      operate_userid = #{operate_userid,jdbcType=VARCHAR},
-      operate_time = #{operate_time,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.rayootech.project.sys.entity.CompanyIntroduction" >
-    update company_introduction
-    set title = #{title,jdbcType=VARCHAR},
-      remark1 = #{remark1,jdbcType=VARCHAR},
-      remark2 = #{remark2,jdbcType=VARCHAR},
-      remark3 = #{remark3,jdbcType=VARCHAR},
-      operate_userid = #{operate_userid,jdbcType=VARCHAR},
-      operate_time = #{operate_time,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+<mapper namespace="CompanyIntroduction">
+	<resultMap id="BaseResultMap"
+		type="com.rayootech.project.sys.entity.CompanyIntroduction">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="remark1" property="remark1" jdbcType="VARCHAR" />
+		<result column="remark2" property="remark2" jdbcType="VARCHAR" />
+		<result column="remark3" property="remark3" jdbcType="VARCHAR" />
+		<result column="operate_userid" property="operate_userid"
+			jdbcType="VARCHAR" />
+		<result column="operate_time" property="operate_time" jdbcType="VARCHAR" />
+		
+		 <!--  createUser：执行com.rayootech.project.sys.entity.User.get方法,并将返回值设置到peoperty.来完成一对一映射  -->
+    	<association property="operateUser" column="operate_userid" javaType="com.rayootech.project.sys.entity.User" select="User.get"/>
+    
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.rayootech.project.sys.entity.CompanyIntroduction" extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, title, remark1, remark2, remark3, operate_userid,
+		operate_time
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	<select id="findById" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from company_introduction
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="find" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from company_introduction
+		<where>
+			<if test="title !=null ">
+				and title like '%${title}%'
+			</if>
+			<if test="content !=null ">
+				and content like '%${content}%'
+			</if>
+			<if test="remark1 !=null ">
+				and remark1 like '%${remark1}%'
+			</if>
+			<if test="remark2 !=null ">
+				and remark2 like '%${remark2}%'
+			</if>
+			<if test="remark3 !=null ">
+				and remark3 like '%${remark3}%'
+			</if>
+		</where>
+		<trim prefix="ORDER BY">
+			<if test="order !=null and sort!=null ">
+				${sort} ${order}
+			</if>
+		</trim>
+	</select>
+		<select id="count" parameterType="map" resultType="int">
+		select
+		count(1)
+		from company_introduction
+		<where>
+			<if test="title !=null ">
+				and title like '%${title}%'
+			</if>
+			<if test="content !=null ">
+				and content like '%${content}%'
+			</if>
+			<if test="remark1 !=null ">
+				and remark1 like '%${remark1}%'
+			</if>
+			<if test="remark2 !=null ">
+				and remark2 like '%${remark2}%'
+			</if>
+			<if test="remark3 !=null ">
+				and remark3 like '%${remark3}%'
+			</if>
+		</where>
+	</select>
+	<delete id="deleteById" parameterType="java.lang.String">
+		delete from
+		company_introduction
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.rayootech.project.sys.entity.CompanyIntroduction">
+		insert into company_introduction (id, title, remark1,
+		remark2, remark3, operate_userid,
+		operate_time, content)
+		values
+		(#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+		#{remark1,jdbcType=VARCHAR},
+		#{remark2,jdbcType=VARCHAR},
+		#{remark3,jdbcType=VARCHAR}, #{operate_userid,jdbcType=VARCHAR},
+		#{operate_time,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.rayootech.project.sys.entity.CompanyIntroduction">
+		insert into company_introduction
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="remark1 != null">
+				remark1,
+			</if>
+			<if test="remark2 != null">
+				remark2,
+			</if>
+			<if test="remark3 != null">
+				remark3,
+			</if>
+			<if test="operate_userid != null">
+				operate_userid,
+			</if>
+			<if test="operate_time != null">
+				operate_time,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="remark1 != null">
+				#{remark1,jdbcType=VARCHAR},
+			</if>
+			<if test="remark2 != null">
+				#{remark2,jdbcType=VARCHAR},
+			</if>
+			<if test="remark3 != null">
+				#{remark3,jdbcType=VARCHAR},
+			</if>
+			<if test="operate_userid != null">
+				#{operate_userid,jdbcType=VARCHAR},
+			</if>
+			<if test="operate_time != null">
+				#{operate_time,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByIdSelective"
+		parameterType="com.rayootech.project.sys.entity.CompanyIntroduction">
+		update company_introduction
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="remark1 != null">
+				remark1 = #{remark1,jdbcType=VARCHAR},
+			</if>
+			<if test="remark2 != null">
+				remark2 = #{remark2,jdbcType=VARCHAR},
+			</if>
+			<if test="remark3 != null">
+				remark3 = #{remark3,jdbcType=VARCHAR},
+			</if>
+			<if test="operate_userid != null">
+				operate_userid = #{operate_userid,jdbcType=VARCHAR},
+			</if>
+			<if test="operate_time != null">
+				operate_time = #{operate_time,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="update"
+		parameterType="com.rayootech.project.sys.entity.CompanyIntroduction">
+		update company_introduction
+		set title =
+		#{title,jdbcType=VARCHAR},
+		remark1 = #{remark1,jdbcType=VARCHAR},
+		remark2 = #{remark2,jdbcType=VARCHAR},
+		remark3 =
+		#{remark3,jdbcType=VARCHAR},
+		operate_userid =
+		#{operate_userid,jdbcType=VARCHAR},
+		operate_time =
+		#{operate_time,jdbcType=VARCHAR},
+		content =
+		#{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateById"
+		parameterType="com.rayootech.project.sys.entity.CompanyIntroduction">
+		update company_introduction
+		set title =
+		#{title,jdbcType=VARCHAR},
+		remark1 = #{remark1,jdbcType=VARCHAR},
+		remark2 = #{remark2,jdbcType=VARCHAR},
+		remark3 =
+		#{remark3,jdbcType=VARCHAR},
+		operate_userid =
+		#{operate_userid,jdbcType=VARCHAR},
+		operate_time =
+		#{operate_time,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
 </mapper>

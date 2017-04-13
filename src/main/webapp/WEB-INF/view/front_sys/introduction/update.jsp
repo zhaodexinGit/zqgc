@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>新增用户</title>
+<title>修改页面</title>
 <c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
 <link rel="stylesheet" href="${ctx}/source/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${ctx}/source/plugins/easyui/themes/bootstrap/easyui.css" />
@@ -26,7 +26,7 @@
 <script type="text/javascript" src="${ctx}/source/plugins/ckeditor_4.5.10_full/ckeditor/ckeditor.js"></script>
 </head>
 <body style="background: none repeat scroll 0 0 #EEEEEE;">
-	<form id="updateDynamicForm" action="${ctx}/front_sys/dynamic/updateDynamic.htm" method="post">
+	<form id="formId" action="${ctx}/front_sys/introduction/update.htm" method="post">
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span12">
@@ -35,36 +35,26 @@
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-plus"></i>
 							</span>
-							<h5>动态详情</h5>
+							<h5>修改公司介绍</h5>
 						</div>
 						<div class="widget-content nopadding">
 							<table cellspacing="0" cellpadding="5" style="width: 96%; margin: 20px" class="bootsTable">
 								<tbody>
 									<tr>
 										<td width="12%">标题 *</td>
-									    <td style='width:78%'><input type="text"style='width:70%' name="title" value="${dynamic.title}" id="title" /></td>
+									    <td style='width:78%'><input type="text"style='width:70%' name="title" value="${entity.title}" id="title" /></td>
 									</tr>
-									<tr>
-										<td width="12%">简介*</td>
-										<td style='width:78%'><input type="text"style='width:70%' name="introduction" value="${dynamic.introduction}" id="introduction" /></td>
-									</tr>
-								<form id="postForm" enctype=”multipart/form-data”>
-									<tr>
-										<td width="12%">简介图片 *</td>
-										<td style='width:78%'><input type="file" style='width:40%' name="introduction_img" id="introduction_img" /></td>
-										<td><input type="button" onClick="dynamicUpload()" value="上传"></td>
-									</tr>
-								</form>
+									
 									<!--
 									<tr>
 										<td width="12%">创建人*</td>
 										<td>
-											${dynamic.create_user_id}
+											${entity.operate_userid}
 											
 										</td>
 										<td width="12%">创建世间*</td>
 										<td>
-											${dynamic.create_time}
+											${entity.operate_time}
 											
 										</td>
 									</tr>
@@ -72,14 +62,14 @@
 									<tr>
 										<td>内容</td>
 										<td colspan="3"><textarea name="content" id="content" class="ckeditor" value=''>
-										${dynamic.content}
+										${entity.content}
 										</textarea></td>
 									</tr>
 								
 								</tbody>
 							</table>
 							<div class="form-actions">
-								<input type='hidden' name='id' value='${dynamic.id }'/>
+								<input type='hidden' name='id' value='${entity.id }'/>
 								
 								<button style="margin-left:100px" type="submit" class="btn btn-primary">保存</button>
 								<!--
@@ -97,7 +87,7 @@
 <script>
 <!-- 简介图片上传 -->
     function dynamicUpload() {
-       var url = '${ctx}/front_sys/dynamic/uploadDynamic.htm?id='+id
+       var url = '${ctx}/front_sys/introduction/upload.htm?id='+id
        $.ajax({
           url: url,
 		  type :"POST",
@@ -110,16 +100,16 @@
 		  error: function (data){
 				alert("上传失败");
 			}
-       }),
+       });
     
     }
     
     
 	function update() {
-		$('#updateDynamicForm').ajaxSubmit(function(data) {
+		$('#formId').ajaxSubmit(function(data) {
 			if (data == "success") {
 				alert("保存成功");
-				window.location.href = '${ctx}/front_sys/dynamic/dynamicList.htm';
+				window.location.href = '${ctx}/front_sys/introduction/list.htm';
 			} else {
 				alert("保存失败!");
 			}
@@ -129,7 +119,7 @@
 	$(document).ready(function() {
 		$('input[type=radio]').uniform();
 		$('select').select2();
-		$("#updateDynamicForm").validate({
+		$("#formId").validate({
 			rules : {
 				
 				title:{
@@ -217,7 +207,6 @@
 		            }
 		        } else {
 		            alert('请选择按钮。');
-		            return false;
 		        }
 		    },
 		    Remove: function (jq) {
