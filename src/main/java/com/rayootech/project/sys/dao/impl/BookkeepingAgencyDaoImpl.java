@@ -65,7 +65,7 @@ public class BookkeepingAgencyDaoImpl extends MyBatisDao<BookkeepingAgency, Stri
 
 	public int deleteById(String id) {
 		// TODO Auto-generated method stub
-		return getSqlSession().delete(getMapperMethod("deleteById"), id);
+		return getSqlSession().delete(getMapperMethod("delete"), id);
 	}
 
 	public int insert(BookkeepingAgency record) {

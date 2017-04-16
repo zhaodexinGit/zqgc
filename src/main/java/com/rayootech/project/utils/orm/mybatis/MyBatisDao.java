@@ -138,5 +138,9 @@ public class MyBatisDao<T, PK extends Serializable> extends
 	public int delete(Integer id) {
 		return getSqlSession().delete(className + DELETE, id);
 	}
+	public int delete(String id) {
+		// TODO Auto-generated method stub
+		return getSqlSession().delete(className + DELETE, id);
+	}
 
 }

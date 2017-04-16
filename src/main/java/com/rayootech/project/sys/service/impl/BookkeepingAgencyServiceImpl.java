@@ -70,7 +70,7 @@ public class BookkeepingAgencyServiceImpl extends MyBatisService<BookkeepingAgen
 		return "error";
 	}
 
-	public String delete(String id) {
+	public String deleteById(String id) {
 		try {
 			if (BookkeepingAgencyDao.deleteById(id) != 0) {
 				return "success";

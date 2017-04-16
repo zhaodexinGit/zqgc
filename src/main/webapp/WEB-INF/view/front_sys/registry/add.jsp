@@ -20,6 +20,8 @@
 <script src="${ctx}/source/js/jquery.uniform.js" type="text/javascript" ></script>
 <script src="${ctx}/source/js/select2.min.js" type="text/javascript" ></script>
 <script src="${ctx}/source/js/unicorn.js" type="text/javascript" ></script>
+<script type="text/javascript" src="${ctx}/source/js/jquery.upload.js"></script>
+
 <script type="text/javascript" src="${ctx}/source/js/xiucai.js"></script>
 
 <!-- ckeditor -->
@@ -46,10 +48,10 @@
 									
 									</tr>
 									
-									<!-- <tr>
-										<td width="12%">简介图片 *</td>
-										<td style='width:78%'><input type="file" style='width:70%' name="introduction_img" id="introduction_img" /></td>
-									</tr> -->
+									<tr>
+										<td width="12%">图片 *</td>
+										<td style='width:78%' id="imageTD"><input type="button" onClick="upload()" value="上传"></td>
+									</tr>
 									<tr>
 										<td>内容</td>
 										<td colspan="3"><textarea name="content" id="content" class="ckeditor" value='ss'></textarea></td>
@@ -70,6 +72,37 @@
 		</div>
 	</form>
 <script>
+
+//上传文件
+function upload(){
+	// 上传方法
+	$.upload({
+		// 上传地址
+		url: "${ctx}/front_sys/accessor/upload.htm?pbid=" +$("#pbid").val()
+				+ "&businesscode=news",
+		// 文件域名字
+		fileName: 'uploadFile', 
+		// 其他表单数据(后台无法获取)
+		params: {pbid: $("#pbid").val()},
+		// 上传完成后, 返回json, text
+		dataType: 'json',
+		// 上传之前回调,return true表示可继续上传
+		onSend: function() {
+			return true;
+		},
+		// 上传之后回调
+		onComplate: function(data) {
+			if(data.status){
+				$("#imageTD").html("<image src='${ctx}/" + data.imageSrc + "' width='100px'/>"
+						+ "<input type='hidden' name='baid' id='baid' value='" + data.baid + "'>"
+//						+ "<input type='button' onClick=downloadFile('" + data.baid + "') value='下载'>"
+						+ "<input type='button' onClick=deleteFile('" + data.baid + "') value='删除'>");
+			}else{
+				alert("上传文件失败！");
+			}
+		}
+	});
+}
 	function save() {
 		$('#addDynamicForm').ajaxSubmit(function(data) {
 			if (data == "success") {

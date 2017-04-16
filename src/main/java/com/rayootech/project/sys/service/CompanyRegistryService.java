@@ -52,6 +52,6 @@ public interface CompanyRegistryService {
 	 * @param id
 	 * @return
 	 */
-	String delete(String id);
+	String deleteById(String id);
 
 }

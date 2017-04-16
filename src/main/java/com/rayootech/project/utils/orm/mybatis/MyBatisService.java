@@ -106,4 +106,10 @@ public class MyBatisService<T, PK extends Serializable> implements
 		return getMyBatisDao().delete(id);
 	}
 
+
+	public int delete(String id) {
+		// TODO Auto-generated method stub
+		return getMyBatisDao().delete(id);
+	}
+
 }

@@ -65,7 +65,7 @@ public class CompanyRegistryDaoImpl extends MyBatisDao<CompanyRegistry, String> 
 
 	public int deleteById(String id) {
 		// TODO Auto-generated method stub
-		return getSqlSession().delete(getMapperMethod("deleteById"), id);
+		return getSqlSession().delete(getMapperMethod("delete"), id);
 	}
 
 	public int insert(CompanyRegistry record) {

@@ -165,6 +165,6 @@ public class CompanyIntroductionController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String deleteDynamic(String id) {
-		return companyIntroductionService.delete(id);
+		return companyIntroductionService.deleteById(id);
 	}
 }

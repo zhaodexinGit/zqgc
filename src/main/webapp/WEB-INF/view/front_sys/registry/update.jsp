@@ -21,6 +21,7 @@
 <script src="${ctx}/source/js/select2.min.js" type="text/javascript" ></script>
 <script src="${ctx}/source/js/unicorn.js" type="text/javascript" ></script>
 <script type="text/javascript" src="${ctx}/source/js/xiucai.js"></script>
+<script src="${ctx}/source/js/jquery.upload.js" type="text/javascript" ></script>
 
 <!-- ckeditor -->
 <script type="text/javascript" src="${ctx}/source/plugins/ckeditor_4.5.10_full/ckeditor/ckeditor.js"></script>
@@ -44,7 +45,10 @@
 										<td width="12%">标题 *</td>
 									    <td style='width:78%'><input type="text"style='width:70%' name="title" value="${entity.title}" id="title" /></td>
 									</tr>
-									
+									<tr>
+										<td width="12%">图片 *</td>
+										<td style='width:78%' id="imageTD"><input type="button" onClick="upload()" value="上传"></td>
+									</tr>
 									<!--
 									<tr>
 										<td width="12%">创建人*</td>
@@ -85,25 +89,79 @@
 		</div>
 	</form>
 <script>
-<!-- 简介图片上传 -->
-    function dynamicUpload() {
-       var url = '${ctx}/front_sys/registry/upload.htm?id='+id
-       $.ajax({
-          url: url,
-		  type :"POST",
-		  dataType : $( '#postForm').serialize(), 
-		  success:function (data){
-				if(data=='success'){
-					alert("上传成功");
-				}
-			},
-		  error: function (data){
-				alert("上传失败");
+
+/**
+ * 显示简介图片
+ */
+function queryUploadFile(){
+	var baid = "${baseAccessor.BAID}";
+	if(baid!=null && baid!=""){
+		var url = "${ctx}/" + "${baseAccessor.FILEPATH}" + "/" + "${baseAccessor.FILENAME}";
+		$("#imageTD").html("<image src='"+url+"' width='100px'/>"
+				+ "<input type='hidden' name='baid' id='baid' value='"+baid+"'>"
+				+ "<input type='button' onClick=deleteFile('"+baid+"') value='删除'>");
+	}
+}
+queryUploadFile();
+
+//上传文件
+function upload(){
+	// 上传方法
+	$.upload({
+		// 上传地址
+		url: "${ctx}/front_sys/accessor/upload.htm?pbid=" +$("#pbid").val()
+				+ "&businesscode=news",
+		// 文件域名字
+		fileName: 'uploadFile', 
+		// 其他表单数据(后台无法获取)
+		params: {pbid: $("#pbid").val()},
+		// 上传完成后, 返回json, text
+		dataType: 'json',
+		// 上传之前回调,return true表示可继续上传
+		onSend: function() {
+			return true;
+		},
+		// 上传之后回调
+		onComplate: function(data) {
+			if(data.status){
+				$("#imageTD").html("<image src='${ctx}/" + data.imageSrc + "' width='100px'/>"
+						+ "<input type='hidden' name='baid' id='baid' value='" + data.baid + "'>"
+// 						+ "<input type='button' onClick=downloadFile('" + data.baid + "') value='下载'>"
+						+ "<input type='button' onClick=deleteFile('" + data.baid + "') value='删除'>");
+			}else{
+				alert("上传文件失败！");
 			}
-       });
-    
-    }
-    
+		}
+	});
+}
+
+/**
+ * 删除上传文件
+ */
+function deleteFile(id){
+	var url='${ctx}/front_sys/accessor/deleteAccessor.htm?id='+id;
+	$.ajax({
+		url: url,
+		async : true,
+		type :"GET",
+		dataType : "text",
+		success:function (data){
+			$("#imageTD").html("<input type='button' onClick='upload()' value='上传'>");
+		},
+		error: function (data){
+			alert("删除失败");
+		}
+	})
+}
+
+/**
+ * 文件下载
+ * @param baid AccessorVO主键ID
+ */
+function downloadFile(baid){
+	window.open("${ctx}/front_sys/accessor/downloadFile.htm?baid=" + baid);
+}
+
     
 	function update() {
 		$('#formId').ajaxSubmit(function(data) {

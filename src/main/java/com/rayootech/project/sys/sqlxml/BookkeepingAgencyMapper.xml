@@ -93,7 +93,7 @@
     from bookkeeping_agency
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="delete" parameterType="java.lang.String" >
     delete from bookkeeping_agency
     where id = #{id,jdbcType=VARCHAR}
   </delete>

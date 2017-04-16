@@ -19,6 +19,12 @@ public class CompanyRegistry {
 
     private String content;
     private User operateUser;
+    
+    /**
+     * 图片ID
+     */
+    private String baid;
+    
     public String getId() {
         return id;
     }
@@ -97,5 +103,13 @@ public class CompanyRegistry {
 
 	public void setOperateUser(User operateUser) {
 		this.operateUser = operateUser;
+	}
+
+	public String getBaid() {
+		return baid;
+	}
+
+	public void setBaid(String baid) {
+		this.baid = baid;
 	}
 }

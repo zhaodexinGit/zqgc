@@ -8,10 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sun.security.krb5.internal.SeqNumber;
+
 import com.rayootech.project.sys.dao.CompanyRegistryDao;
+import com.rayootech.project.sys.entity.BaseAccessor;
 import com.rayootech.project.sys.entity.CompanyRegistry;
+import com.rayootech.project.sys.service.BaseAccessorService;
 import com.rayootech.project.sys.service.CompanyRegistryService;
 import com.rayootech.project.sys.service.ShiroDbRealm.ShiroUser;
+import com.rayootech.project.utils.Sequence;
 import com.rayootech.project.utils.Utils;
 import com.rayootech.project.utils.orm.Page;
 import com.rayootech.project.utils.orm.mybatis.MyBatisService;
@@ -25,6 +30,8 @@ public class CompanyRegistryServiceImpl extends MyBatisService<CompanyRegistry, 
 	
 	@Autowired
 	private CompanyRegistryDao CompanyRegistryDao;
+	@Autowired
+	private BaseAccessorService baseAccessorService;
 	
 	public String save(CompanyRegistry entity) {
 		// TODO Auto-generated method stub
@@ -34,11 +41,20 @@ public class CompanyRegistryServiceImpl extends MyBatisService<CompanyRegistry, 
 			if(user == null){
 				throw new Exception("用户未登录");
 			}else{
+				entity.setId(Sequence.getSequence());
 				entity.setOperate_userid(user.getId().toString());
 				entity.setOperate_time(Utils.getCurrentDatetime().toString().substring(0, 19));
 			}
 			
 			if(CompanyRegistryDao.insert(entity)!=0){
+
+				//如果上传简介图片，则更新简介图片的DPID
+				if(entity.getBaid()!=null && !"".equals(entity.getBaid())){
+					BaseAccessor baseAccessor = baseAccessorService.getById(entity.getBaid());
+					baseAccessor.setDPID(entity.getId()+"");
+					baseAccessorService.updateAccessor(baseAccessor);
+				}
+				
 				return "success";
 			}
 		} catch (Exception e) {
@@ -62,6 +78,13 @@ public class CompanyRegistryServiceImpl extends MyBatisService<CompanyRegistry, 
 				entity.setOperate_time(Utils.getCurrentDatetime().toString().substring(0, 19));
 			}
 			if (super.update(entity) != 0) {
+				
+				//如果上传简介图片，则更新简介图片的DPID
+				if(entity.getBaid()!=null && !"".equals(entity.getBaid())){
+					BaseAccessor baseAccessor = baseAccessorService.getById(entity.getBaid());
+					baseAccessor.setDPID(entity.getId()+"");
+					baseAccessorService.updateAccessor(baseAccessor);
+				}
 				return "success";
 			}
 		} catch (Exception e) {
@@ -70,7 +93,7 @@ public class CompanyRegistryServiceImpl extends MyBatisService<CompanyRegistry, 
 		return "error";
 	}
 
-	public String delete(String id) {
+	public String deleteById(String id) {
 		try {
 			if (CompanyRegistryDao.deleteById(id) != 0) {
 				return "success";

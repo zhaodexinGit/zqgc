@@ -165,6 +165,6 @@ public class BookkeepingAgencyController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String deleteDynamic(String id) {
-		return BookkeepingAgencyService.delete(id);
+		return BookkeepingAgencyService.deleteById(id);
 	}
 }

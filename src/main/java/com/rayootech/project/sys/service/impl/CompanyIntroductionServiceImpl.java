@@ -12,6 +12,7 @@ import com.rayootech.project.sys.dao.CompanyIntroductionDao;
 import com.rayootech.project.sys.entity.CompanyIntroduction;
 import com.rayootech.project.sys.service.CompanyIntroductionService;
 import com.rayootech.project.sys.service.ShiroDbRealm.ShiroUser;
+import com.rayootech.project.utils.Sequence;
 import com.rayootech.project.utils.Utils;
 import com.rayootech.project.utils.orm.Page;
 import com.rayootech.project.utils.orm.mybatis.MyBatisService;
@@ -34,6 +35,7 @@ public class CompanyIntroductionServiceImpl extends MyBatisService<CompanyIntrod
 			if(user == null){
 				throw new Exception("用户未登录");
 			}else{
+				entity.setId(Sequence.getSequence());
 				entity.setOperate_userid(user.getId().toString());
 				entity.setOperate_time(Utils.getCurrentDatetime().toString().substring(0, 19));
 			}
@@ -70,7 +72,7 @@ public class CompanyIntroductionServiceImpl extends MyBatisService<CompanyIntrod
 		return "error";
 	}
 
-	public String delete(String id) {
+	public String deleteById(String id) {
 		try {
 			if (CompanyIntroductionDao.deleteById(id) != 0) {
 				return "success";

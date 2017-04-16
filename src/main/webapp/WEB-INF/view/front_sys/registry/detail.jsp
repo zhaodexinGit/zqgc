@@ -54,6 +54,10 @@
 
 									</tr>
 									<tr>
+										<td width="12%">图片 *</td>
+										<td id="imageTD"></td>
+									</tr>
+									<tr>
 										<td width="12%">创建人*</td>
 										<td>${entity.operateUser.name}</td>
 									</tr>
@@ -84,6 +88,21 @@
 		</div>
 	</form>
 	<script>
+		/**N 
+		 * 显示简介图片
+		 */
+		function queryUploadFile() {
+			var baid = "${baseAccessor.BAID}";
+			if (baid != null && baid != "") {
+				var url = "${ctx}/" + "${baseAccessor.FILEPATH}" + "/"
+						+ "${baseAccessor.FILENAME}";
+				$("#imageTD")
+						.html(
+								"<image src='"+url+"' width='100px'/>"
+										+ "<input type='hidden' name='baid' id='baid' value='"+baid+"'>");
+			}
+		}
+
 		function update() {
 			$('#updateDynamicForm')
 					.ajaxSubmit(
@@ -98,6 +117,7 @@
 		}
 
 		$(document).ready(function() {
+			queryUploadFile();
 			$('input[type=radio]').uniform();
 			$('select').select2();
 			$("#updateDynamicForm").validate({

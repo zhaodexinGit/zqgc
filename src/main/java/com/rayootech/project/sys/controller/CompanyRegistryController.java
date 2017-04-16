@@ -1,6 +1,8 @@
 package com.rayootech.project.sys.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.rayootech.project.sys.entity.BaseAccessor;
 import com.rayootech.project.sys.entity.CompanyRegistry;
+import com.rayootech.project.sys.service.BaseAccessorService;
 import com.rayootech.project.sys.service.CompanyRegistryService;
 import com.rayootech.project.utils.PageJson;
+import com.rayootech.project.utils.PropertyUtil;
 import com.rayootech.project.utils.Utils;
 import com.rayootech.project.utils.orm.Page;
 
@@ -34,6 +39,8 @@ public class CompanyRegistryController {
 
 	@Autowired
 	private CompanyRegistryService CompanyRegistryService;
+	@Autowired
+	private BaseAccessorService baseAccessorService;
 	/**
 	 * 
 	 * <B>功能简述</B><br>
@@ -107,6 +114,18 @@ public class CompanyRegistryController {
 	public String toDetail(HttpServletRequest request,String id, ModelMap modelMap) {
 		CompanyRegistry entity = CompanyRegistryService.findById(id);
 		modelMap.put("entity",entity);
+		
+		
+		//如果简介图片ID不为空，查询简介图片信息
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("DPID", entity.getId());
+		List<BaseAccessor> list = baseAccessorService.find(params);
+		if(list!=null && list.size()>0){
+			String uploadDir = PropertyUtil.getProperty("upload.path");
+			list.get(0).setFILEPATH(uploadDir);
+			modelMap.put("baseAccessor",list.get(0));
+		}
+		
 		return "front_sys/registry/detail";
 	}
 	/**
@@ -121,6 +140,14 @@ public class CompanyRegistryController {
 	public String toUpdateDynamic(HttpServletRequest request,String id, ModelMap modelMap) {
 		CompanyRegistry entity = CompanyRegistryService.findById(id);
 		modelMap.put("entity",entity);
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("DPID", entity.getId());
+		List<BaseAccessor> list = baseAccessorService.find(params);
+		if(list!=null && list.size()>0){
+			String uploadDir = PropertyUtil.getProperty("upload.path");
+			list.get(0).setFILEPATH(uploadDir);
+			modelMap.put("baseAccessor",list.get(0));
+		}
 //		modelMap.put("user", JSON.toJSONString(nlbCompanyProfileService.(userId)));
 		return "front_sys/registry/update";
 	}
@@ -165,6 +192,6 @@ public class CompanyRegistryController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String deleteDynamic(String id) {
-		return CompanyRegistryService.delete(id);
+		return CompanyRegistryService.deleteById(id);
 	}
 }
