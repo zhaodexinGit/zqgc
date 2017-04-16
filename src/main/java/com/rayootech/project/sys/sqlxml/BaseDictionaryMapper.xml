@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BaseDictionary" >
+  <resultMap id="BaseResultMap" type="com.rayootech.project.sys.entity.BaseDictionary" >
+    <id column="BDID" property="BDID" jdbcType="VARCHAR" />
+    <result column="TYPE" property="TYPE" jdbcType="VARCHAR" />
+    <result column="PID" property="PID" jdbcType="VARCHAR" />
+    <result column="NAME" property="NAME" jdbcType="VARCHAR" />
+    <result column="VALUE" property="VALUE" jdbcType="VARCHAR" />
+    <result column="REMARK" property="REMARK" jdbcType="VARCHAR" />
+    <result column="SNO" property="SNO" jdbcType="INTEGER" />
+    <result column="BELONGTYPE" property="BELONGTYPE" jdbcType="VARCHAR" />
+    <result column="BELONGVALUE" property="BELONGVALUE" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    BDID, TYPE, PID, NAME, VALUE, REMARK, SNO, BELONGTYPE, BELONGVALUE
+  </sql>
+  
+  <!-- 查询所有BaseDictionary -->
+  <select id="find" parameterType="map" resultMap="BaseResultMap" >
+  	select <include refid="Base_Column_List"/> from base_dictionary
+  	<where>
+		    <if test="TYPE !=null ">
+				and TYPE like '%${TYPE}%'
+			</if>
+		    <if test="PID !=null ">
+				and PID like '%${PID}%'
+			</if>
+			<if test="NAME !=null ">
+				and NAME like '%${NAME}%'
+			</if>
+			<if test="VALUE !=null ">
+				and VALUE like '%${VALUE}%'
+			</if>
+			<if test="REMARK !=null ">
+				and REMARK like '%${REMARK}%'
+			</if>
+			<if test="SNO !=null ">
+				and SNO like '%${SNO}%'
+			</if>
+			<if test="BELONGTYPE !=null ">
+				and BELONGTYPE like '%${BELONGTYPE}%'
+			</if>
+			<if test="BELONGVALUE !=null ">
+				and BELONGVALUE like '%${BELONGVALUE}%'
+			</if>
+	</where>
+
+	ORDER BY type,sno desc
+  </select>
+  
+  <!-- 查询BaseDictionary信息的总数 -->
+  <select id="count" parameterType="map" resultType="int">
+  		select count(1) from base_dictionary
+  		<where>
+		    <if test="TYPE !=null ">
+				and TYPE like '%${TYPE}%'
+			</if>
+		    <if test="PID !=null ">
+				and PID like '%${PID}%'
+			</if>
+			<if test="NAME !=null ">
+				and NAME like '%${NAME}%'
+			</if>
+			<if test="VALUE !=null ">
+				and VALUE like '%${VALUE}%'
+			</if>
+			<if test="REMARK !=null ">
+				and REMARK like '%${REMARK}%'
+			</if>
+			<if test="SNO !=null ">
+				and SNO like '%${SNO}%'
+			</if>
+			<if test="BELONGTYPE !=null ">
+				and BELONGTYPE like '%${BELONGTYPE}%'
+			</if>
+			<if test="BELONGVALUE !=null ">
+				and BELONGVALUE like '%${BELONGVALUE}%'
+			</if>
+		</where>
+	</select>
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_dictionary
+    where BDID = #{BDID,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from base_dictionary
+    where BDID = #{BDID,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rayootech.project.sys.entity.BaseDictionary" >
+    insert into base_dictionary (BDID, TYPE, PID, 
+      NAME, VALUE, REMARK, 
+      SNO, BELONGTYPE, BELONGVALUE
+      )
+    values (#{BDID,jdbcType=VARCHAR}, #{TYPE,jdbcType=VARCHAR}, #{PID,jdbcType=VARCHAR}, 
+      #{NAME,jdbcType=VARCHAR}, #{VALUE,jdbcType=VARCHAR}, #{REMARK,jdbcType=VARCHAR}, 
+      #{SNO,jdbcType=INTEGER}, #{BELONGTYPE,jdbcType=VARCHAR}, #{BELONGVALUE,jdbcType=VARCHAR}
+      )
+  </insert>
+  <!-- 修改 -->
+  <update id="update" parameterType="com.rayootech.project.sys.entity.BaseDictionary" >
+    update base_dictionary
+    <set >
+      <if test="TYPE != null" >
+        TYPE = #{TYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="PID != null" >
+        PID = #{PID,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME != null" >
+        NAME = #{NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="VALUE != null" >
+        VALUE = #{VALUE,jdbcType=VARCHAR},
+      </if>
+      <if test="REMARK != null" >
+        REMARK = #{REMARK,jdbcType=VARCHAR},
+      </if>
+      <if test="SNO != null" >
+        SNO = #{SNO,jdbcType=INTEGER},
+      </if>
+      <if test="BELONGTYPE != null" >
+        BELONGTYPE = #{BELONGTYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="BELONGVALUE != null" >
+        BELONGVALUE = #{BELONGVALUE,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BDID = #{BDID,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertSelective" parameterType="com.rayootech.project.sys.entity.BaseDictionary" >
+    insert into base_dictionary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="BDID != null" >
+        BDID,
+      </if>
+      <if test="TYPE != null" >
+        TYPE,
+      </if>
+      <if test="PID != null" >
+        PID,
+      </if>
+      <if test="NAME != null" >
+        NAME,
+      </if>
+      <if test="VALUE != null" >
+        VALUE,
+      </if>
+      <if test="REMARK != null" >
+        REMARK,
+      </if>
+      <if test="SNO != null" >
+        SNO,
+      </if>
+      <if test="BELONGTYPE != null" >
+        BELONGTYPE,
+      </if>
+      <if test="BELONGVALUE != null" >
+        BELONGVALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="BDID != null" >
+        #{BDID,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE != null" >
+        #{TYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="PID != null" >
+        #{PID,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME != null" >
+        #{NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="VALUE != null" >
+        #{VALUE,jdbcType=VARCHAR},
+      </if>
+      <if test="REMARK != null" >
+        #{REMARK,jdbcType=VARCHAR},
+      </if>
+      <if test="SNO != null" >
+        #{SNO,jdbcType=INTEGER},
+      </if>
+      <if test="BELONGTYPE != null" >
+        #{BELONGTYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="BELONGVALUE != null" >
+        #{BELONGVALUE,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.rayootech.project.sys.entity.BaseDictionary" >
+    update base_dictionary
+    <set >
+      <if test="TYPE != null" >
+        TYPE = #{TYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="PID != null" >
+        PID = #{PID,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME != null" >
+        NAME = #{NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="VALUE != null" >
+        VALUE = #{VALUE,jdbcType=VARCHAR},
+      </if>
+      <if test="REMARK != null" >
+        REMARK = #{REMARK,jdbcType=VARCHAR},
+      </if>
+      <if test="SNO != null" >
+        SNO = #{SNO,jdbcType=INTEGER},
+      </if>
+      <if test="BELONGTYPE != null" >
+        BELONGTYPE = #{BELONGTYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="BELONGVALUE != null" >
+        BELONGVALUE = #{BELONGVALUE,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BDID = #{BDID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rayootech.project.sys.entity.BaseDictionary" >
+    update base_dictionary
+    set TYPE = #{TYPE,jdbcType=VARCHAR},
+      PID = #{PID,jdbcType=VARCHAR},
+      NAME = #{NAME,jdbcType=VARCHAR},
+      VALUE = #{VALUE,jdbcType=VARCHAR},
+      REMARK = #{REMARK,jdbcType=VARCHAR},
+      SNO = #{SNO,jdbcType=INTEGER},
+      BELONGTYPE = #{BELONGTYPE,jdbcType=VARCHAR},
+      BELONGVALUE = #{BELONGVALUE,jdbcType=VARCHAR}
+    where BDID = #{BDID,jdbcType=VARCHAR}
+  </update>
+</mapper>

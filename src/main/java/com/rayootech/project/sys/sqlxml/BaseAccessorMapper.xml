@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BaseAccessor" >
+  <resultMap id="BaseResultMap" type="com.rayootech.project.sys.entity.BaseAccessor" >
+    <id column="BAID" property="BAID" jdbcType="VARCHAR" />
+    <result column="BUSINESSCODE" property="BUSINESSCODE" jdbcType="VARCHAR" />
+    <result column="BUSINESSNAME" property="BUSINESSNAME" jdbcType="VARCHAR" />
+    <result column="DPID" property="DPID" jdbcType="VARCHAR" />
+    <result column="FILENAME" property="FILENAME" jdbcType="VARCHAR" />
+    <result column="FILEPATH" property="FILEPATH" jdbcType="VARCHAR" />
+    <result column="FILETYPE" property="FILETYPE" jdbcType="VARCHAR" />
+    <result column="FILEEXPLAIN" property="FILEEXPLAIN" jdbcType="VARCHAR" />
+    <!-- 
+    <association property="nlbTravelprivatecustom" javaType="com.rayootech.project.sys.entity.NlbTravelprivatecustom">  
+            <id column="id" property="id" />
+		    <result column="name" property="name" />
+		    <result column="mood" property="mood" />
+		    <result column="briefIntroduction" property="briefIntroduction" />
+		    <result column="price" property="price" jdbcType="VARCHAR" />
+		    <result column="ProductNumber" property="productNumber" />
+		    <result column="ServiceCommitment" property="serviceCommitment" />
+		    <result column="create_time" property="create_time" />
+		    <result column="update_user_id" property="update_user_id" />
+		    <result column="update_time" property="update_time" />
+    </association>
+    <association property="nlbInsurancePrivateCustom" javaType="com.rayootech.project.sys.entity.NlbInsurancePrivateCustom">  
+            <id column="id" property="id" />
+		    <result column="name" property="name" />
+		    <result column="mood" property="mood" />
+		    <result column="briefIntroduction" property="briefIntroduction" />
+		    <result column="price" property="price" jdbcType="VARCHAR" />
+		    <result column="ProductNumber" property="productNumber" />
+		    <result column="ServiceCommitment" property="serviceCommitment" />
+		    <result column="create_time" property="create_time" />
+		    <result column="update_user_id" property="update_user_id" />
+		    <result column="update_time" property="update_time" />
+    </association>
+    
+    <association property="nlbSunDryingup" javaType="com.rayootech.project.sys.entity.NlbSunDryingup">  
+            <id column="id" property="id" />
+		    <result column="mood" property="mood" />
+		    <result column="title" property="title" />
+		    <result column="introduction" property="introduction" />
+		    <result column="status" property="status" />
+		    <result column="approvalOpinions" property="approvalOpinions" />
+		    <result column="create_user_id" property="create_user_id" />
+		    <result column="create_time" property="create_time" /> 
+    </association> 
+    -->
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    BAID, BUSINESSCODE, BUSINESSNAME, DPID, FILENAME, FILEPATH, FILETYPE, FILEEXPLAIN
+  </sql>
+  <!-- 查询所有BaseAccessor -->
+  <select id="find" parameterType="map" resultMap="BaseResultMap" >
+  	select <include refid="Base_Column_List"/> from base_accessor
+  	<where>
+		    <if test="BUSINESSCODE !=null ">
+				and BUSINESSCODE like '%${BUSINESSCODE}%'
+			</if>
+		    <if test="BUSINESSNAME !=null ">
+				and BUSINESSNAME like '%${BUSINESSNAME}%'
+			</if>
+			<if test="DPID !=null ">
+				and DPID in (${DPID})
+			</if>
+			<if test="FILENAME !=null ">
+				and FILENAME like '%${FILENAME}%'
+			</if>
+			<if test="FILEPATH !=null ">
+				and FILEPATH like '%${FILEPATH}%'
+			</if>
+			<if test="FILETYPE !=null ">
+				and FILETYPE like '%${FILETYPE}%'
+			</if>
+			<if test="FILEEXPLAIN !=null ">
+				and FILEEXPLAIN like '%${FILEEXPLAIN}%'
+			</if>
+	</where>
+  	<trim prefix="ORDER BY"> 
+			<if test="order !=null and sort!=null ">
+				${sort} ${order}
+			</if>
+	</trim>
+  </select>
+
+   <!-- 查询所有BaseAccessor -->
+  <select id="findByDPID" parameterType="java.lang.String"  resultMap="BaseResultMap" >
+  	select <include refid="Base_Column_List"/> from base_accessor
+  	<where>
+		 DPID = #{id}
+	</where>
+  	order by baid desc
+  </select>
+
+  <!-- 查询所有BaseAccessor -->
+  <select id="get" parameterType="java.lang.String"  resultMap="BaseResultMap" >
+  	select <include refid="Base_Column_List"/> from base_accessor
+  	<where>
+		 DPID = #{id}
+	</where>
+  </select>
+  <!-- 查询BaseAccessor信息的总数 -->
+  <select id="count" parameterType="map" resultType="int">
+  		select count(1) from base_accessor
+  		<where>
+		    <if test="BUSINESSCODE !=null ">
+				and BUSINESSCODE like '%${BUSINESSCODE}%'
+			</if>
+		    <if test="BUSINESSNAME !=null ">
+				and BUSINESSNAME like '%${BUSINESSNAME}%'
+			</if>
+			<if test="DPID !=null ">
+				and DPID like '%${DPID}%'
+			</if>
+			<if test="FILENAME !=null ">
+				and FILENAME like '%${FILENAME}%'
+			</if>
+			<if test="FILEPATH !=null ">
+				and FILEPATH like '%${FILEPATH}%'
+			</if>
+			<if test="FILETYPE !=null ">
+				and FILETYPE like '%${FILETYPE}%'
+			</if>
+			<if test="FILEEXPLAIN !=null ">
+				and FILEEXPLAIN like '%${FILEEXPLAIN}%'
+			</if>
+		</where>
+	</select>
+  
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_accessor
+    where BAID = #{BAID,jdbcType=VARCHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from base_accessor
+    where BAID = #{BAID,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rayootech.project.sys.entity.BaseAccessor" >
+    insert into base_accessor (BAID, BUSINESSCODE, BUSINESSNAME, 
+      DPID, FILENAME, FILEPATH, 
+      FILETYPE, FILEEXPLAIN)
+    values (#{BAID,jdbcType=VARCHAR}, #{BUSINESSCODE,jdbcType=VARCHAR}, #{BUSINESSNAME,jdbcType=VARCHAR}, 
+      #{DPID,jdbcType=VARCHAR}, #{FILENAME,jdbcType=VARCHAR}, #{FILEPATH,jdbcType=VARCHAR}, 
+      #{FILETYPE,jdbcType=VARCHAR}, #{FILEEXPLAIN,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rayootech.project.sys.entity.BaseAccessor" >
+    insert into base_accessor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="BAID != null" >
+        BAID,
+      </if>
+      <if test="BUSINESSCODE != null" >
+        BUSINESSCODE,
+      </if>
+      <if test="BUSINESSNAME != null" >
+        BUSINESSNAME,
+      </if>
+      <if test="DPID != null" >
+        DPID,
+      </if>
+      <if test="FILENAME != null" >
+        FILENAME,
+      </if>
+      <if test="FILEPATH != null" >
+        FILEPATH,
+      </if>
+      <if test="FILETYPE != null" >
+        FILETYPE,
+      </if>
+      <if test="FILEEXPLAIN != null" >
+        FILEEXPLAIN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="BAID != null" >
+        #{BAID,jdbcType=VARCHAR},
+      </if>
+      <if test="BUSINESSCODE != null" >
+        #{BUSINESSCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="BUSINESSNAME != null" >
+        #{BUSINESSNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="DPID != null" >
+        #{DPID,jdbcType=VARCHAR},
+      </if>
+      <if test="FILENAME != null" >
+        #{FILENAME,jdbcType=VARCHAR},
+      </if>
+      <if test="FILEPATH != null" >
+        #{FILEPATH,jdbcType=VARCHAR},
+      </if>
+      <if test="FILETYPE != null" >
+        #{FILETYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="FILEEXPLAIN != null" >
+        #{FILEEXPLAIN,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- 修改 -->
+  <update id="update" parameterType="com.rayootech.project.sys.entity.BaseAccessor" >
+  	update base_accessor
+  	set BUSINESSCODE = #{BUSINESSCODE,jdbcType=VARCHAR},
+  		BUSINESSNAME = #{BUSINESSNAME,jdbcType=VARCHAR},
+  		DPID = #{DPID,jdbcType=LONGVARCHAR},
+      	FILENAME = #{FILENAME,jdbcType=INTEGER},
+      	FILEPATH = #{FILEPATH,jdbcType=TIMESTAMP},
+      	FILETYPE = #{FILETYPE,jdbcType=VARCHAR},
+     	FILEEXPLAIN = #{FILEEXPLAIN,jdbcType=VARCHAR}
+     	
+     	where BAID = #{BAID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rayootech.project.sys.entity.BaseAccessor" >
+    update base_accessor
+    <set >
+      <if test="BUSINESSCODE != null" >
+        BUSINESSCODE = #{BUSINESSCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="BUSINESSNAME != null" >
+        BUSINESSNAME = #{BUSINESSNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="DPID != null" >
+        DPID = #{DPID,jdbcType=VARCHAR},
+      </if>
+      <if test="FILENAME != null" >
+        FILENAME = #{FILENAME,jdbcType=VARCHAR},
+      </if>
+      <if test="FILEPATH != null" >
+        FILEPATH = #{FILEPATH,jdbcType=VARCHAR},
+      </if>
+      <if test="FILETYPE != null" >
+        FILETYPE = #{FILETYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="FILEEXPLAIN != null" >
+        FILEEXPLAIN = #{FILEEXPLAIN,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BAID = #{BAID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rayootech.project.sys.entity.BaseAccessor" >
+    update base_accessor
+    set BUSINESSCODE = #{BUSINESSCODE,jdbcType=VARCHAR},
+      BUSINESSNAME = #{BUSINESSNAME,jdbcType=VARCHAR},
+      DPID = #{DPID,jdbcType=VARCHAR},
+      FILENAME = #{FILENAME,jdbcType=VARCHAR},
+      FILEPATH = #{FILEPATH,jdbcType=VARCHAR},
+      FILETYPE = #{FILETYPE,jdbcType=VARCHAR},
+      FILEEXPLAIN = #{FILEEXPLAIN,jdbcType=VARCHAR}
+    where BAID = #{BAID,jdbcType=VARCHAR}
+  </update>
+</mapper>
