@@ -1,5 +1,6 @@
 package com.rayootech.project.sys.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.rayootech.project.sys.entity.BaseDictionary;
@@ -63,4 +64,6 @@ public interface BaseDictionaryService {
 	 * @return
 	 */
 	String deleteDictionary(String id);
+
+	List<BaseDictionary> getListByType(Map<String, Object> params);
 }

@@ -29,7 +29,7 @@
 		<include refid="Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from company_registry
+		from bookkeeping_agency
 		where id = #{id,jdbcType=VARCHAR}
 	</select>
 
@@ -38,7 +38,7 @@
 		<include refid="Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from company_registry
+		from bookkeeping_agency
 		<where>
 			<if test="title !=null ">
 				and title like '%${title}%'
@@ -66,7 +66,7 @@
 		<select id="count" parameterType="map" resultType="int">
 		select
 		count(1)
-		from company_registry
+		from bookkeeping_agency
 		<where>
 			<if test="title !=null ">
 				and title like '%${title}%'
@@ -187,7 +187,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rayootech.project.sys.entity.BookkeepingAgency" >
+  <update id="update" parameterType="com.rayootech.project.sys.entity.BookkeepingAgency" >
     update bookkeeping_agency
     set title = #{title,jdbcType=VARCHAR},
       remark1 = #{remark1,jdbcType=VARCHAR},

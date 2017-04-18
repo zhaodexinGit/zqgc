@@ -12,6 +12,7 @@ import com.rayootech.project.sys.dao.BookkeepingAgencyDao;
 import com.rayootech.project.sys.entity.BookkeepingAgency;
 import com.rayootech.project.sys.service.BookkeepingAgencyService;
 import com.rayootech.project.sys.service.ShiroDbRealm.ShiroUser;
+import com.rayootech.project.utils.Sequence;
 import com.rayootech.project.utils.Utils;
 import com.rayootech.project.utils.orm.Page;
 import com.rayootech.project.utils.orm.mybatis.MyBatisService;
@@ -34,6 +35,7 @@ public class BookkeepingAgencyServiceImpl extends MyBatisService<BookkeepingAgen
 			if(user == null){
 				throw new Exception("用户未登录");
 			}else{
+				entity.setId(Sequence.getSequence());
 				entity.setOperate_userid(user.getId().toString());
 				entity.setOperate_time(Utils.getCurrentDatetime().toString().substring(0, 19));
 			}

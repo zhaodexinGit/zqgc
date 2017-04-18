@@ -1,6 +1,8 @@
 package com.rayootech.project.sys.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.rayootech.project.sys.entity.BaseDictionary;
 import com.rayootech.project.sys.entity.BookkeepingAgency;
+import com.rayootech.project.sys.service.BaseDictionaryService;
 import com.rayootech.project.sys.service.BookkeepingAgencyService;
 import com.rayootech.project.utils.PageJson;
 import com.rayootech.project.utils.Utils;
@@ -34,6 +38,8 @@ public class BookkeepingAgencyController {
 
 	@Autowired
 	private BookkeepingAgencyService BookkeepingAgencyService;
+	@Autowired
+	private BaseDictionaryService baseDictionaryService;
 	/**
 	 * 
 	 * <B>功能简述</B><br>
@@ -74,7 +80,11 @@ public class BookkeepingAgencyController {
 	 * @return
 	 */
 	@RequestMapping("toAdd")
-	public String toAddDynamic() {
+	public String toAddDynamic(ModelMap modelMap) {
+		Map<String, Object> params1 = new HashMap<String, Object>();
+		params1.put("TYPE", "'bbxrzjlx'");
+		List<BaseDictionary> documentList = baseDictionaryService.getListByType(params1);
+		modelMap.put("documentList", documentList);
 		return "front_sys/agency/add";
 	}
 	

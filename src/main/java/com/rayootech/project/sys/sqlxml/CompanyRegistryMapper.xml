@@ -205,7 +205,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rayootech.project.sys.entity.CompanyRegistry" >
+  <update id="update" parameterType="com.rayootech.project.sys.entity.CompanyRegistry" >
     update company_registry
     set title = #{title,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},

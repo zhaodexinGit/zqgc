@@ -1,5 +1,6 @@
 package com.rayootech.project.sys.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -71,5 +72,10 @@ public class BaseDictionaryServiceImpl extends MyBatisService< BaseDictionary,St
 			Map<String, Object> params) {
 		// TODO Auto-generated method stub
 		return super.findPage(pageData, params);
+	}
+
+	public List<BaseDictionary> getListByType(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return baseDictionaryDao.getListByType(params);
 	}
 }

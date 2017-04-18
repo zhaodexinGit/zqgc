@@ -1,5 +1,8 @@
 package com.rayootech.project.sys.dao.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 import com.rayootech.project.sys.dao.BaseDictionaryDao;
@@ -39,6 +42,12 @@ public class BaseDictionaryDaoImpl extends MyBatisDao<BaseDictionary, String> im
 	public int updateById(BaseDictionary record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public List<BaseDictionary> getListByType(Map<String, Object> params) {
+		return null;
+		// TODO Auto-generated method stub
+//		return getSqlSession().select(getMapperMethod("getListByType"), params);
 	}
 
 }
